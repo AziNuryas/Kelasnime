@@ -11,20 +11,17 @@ import { genreToSlug } from "@/lib/utils";
 import type { APIResponse, HomeData, DonghuaHomeData } from "@/types/anime";
 
 export default async function HomePage() {
-  // Parallel fetch: homepage + donghua data
-  const [homeResult, donghuaResult] = await Promise.allSettled([
-    fetchAPI<APIResponse<HomeData>>("/home", 60),
-    fetchAPI<DonghuaHomeData>("/donghua/home/1", 120),
-  ]);
-
-  const homeData =
-    homeResult.status === "fulfilled" ? homeResult.value.data : null;
-  const donghuaData =
-    donghuaResult.status === "fulfilled" ? donghuaResult.value : null;
+  // Fetch homepage data
+  let homeData: HomeData | null = null;
+  try {
+    const res = await fetchAPI<APIResponse<HomeData>>("/home", 60);
+    homeData = res.data;
+  } catch (error) {
+    console.error("Failed to fetch home data", error);
+  }
 
   const ongoingList = homeData?.ongoing?.animeList || [];
   const completedList = homeData?.completed?.animeList || [];
-  const donghuaList = donghuaData?.latest_release || [];
 
   // Build hero slides from ongoing anime with good posters
   const heroSlides = ongoingList.slice(0, 5).map((a) => ({
@@ -82,24 +79,6 @@ export default async function HomePage() {
         </Suspense>
       </section>
 
-      {/* Donghua Terbaru */}
-      {donghuaList.length > 0 && (
-        <section className="section-container">
-          <AnimeSection
-            title="🐉 Donghua Terbaru"
-            linkHref="/donghua"
-            items={donghuaList.slice(0, 10).map((d) => ({
-              title: d.title,
-              poster: d.poster,
-              href: `/donghua/${d.slug}`,
-              status: d.status,
-              episodes: d.current_episode,
-              animeId: d.slug,
-            }))}
-            scroll
-          />
-        </section>
-      )}
 
       {/* Genre Quick Access */}
       <section className="section-container py-6">

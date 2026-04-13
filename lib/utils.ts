@@ -12,9 +12,17 @@ export function formatEpisode(eps: number | string | null | undefined): string {
   return String(eps);
 }
 
-/** Extract slug from href path like /anime/anime/slug → slug */
-export function extractSlug(href: string): string {
-  return href.split("/").filter(Boolean).pop() || "";
+export function extractSlug(href: string | any): string {
+  if (!href) return "";
+  if (typeof href === "string") {
+    return href.split("/").filter(Boolean).pop() || "";
+  }
+  if (typeof href === "object") {
+    if (typeof href.href === "string") return href.href.split("/").filter(Boolean).pop() || "";
+    if (typeof href.slug === "string") return href.slug;
+    if (typeof href.url === "string") return href.url.split("/").filter(Boolean).pop() || "";
+  }
+  return "";
 }
 
 /** Truncate text with ellipsis */

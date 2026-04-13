@@ -1,5 +1,8 @@
 import { NextRequest } from "next/server";
 
+export const dynamic = 'force-dynamic'; // Paksa endpoint ini agar selalu jadi dynamic (tidak dicache satupun)
+export const fetchCache = 'force-no-store';
+
 const BASE = process.env.ANIME_API_BASE || "https://www.sankavollerei.com";
 
 export async function GET(
@@ -13,6 +16,7 @@ export async function GET(
 
   try {
     const res = await fetch(url, {
+      cache: "no-store", // Pastikan fetch proxy juga tidak dicache
       signal: AbortSignal.timeout(15000),
       headers: {
         "User-Agent": "KelasNime/1.0",
@@ -25,7 +29,7 @@ export async function GET(
     return Response.json(data, {
       status: res.status,
       headers: {
-        "Cache-Control": "public, s-maxage=60, stale-while-revalidate=300",
+        "Cache-Control": "no-store, no-cache, must-revalidate", // Hapus max-age yang bikin nyangkut
         "Access-Control-Allow-Origin": "*",
       },
     });

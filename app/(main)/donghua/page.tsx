@@ -44,16 +44,20 @@ export default async function DonghuaPage({ searchParams }: Props) {
         <section>
           <h2 className="section-title mb-4">Rilis Terbaru</h2>
           <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 stagger-children">
-            {latest.map((d, i) => (
-              <AnimeCard
-                key={`${d.slug}-${i}`}
-                title={d.title}
-                poster={d.poster}
-                href={`/donghua/${d.slug}`}
-                status={d.status}
-                episodes={d.current_episode}
-              />
-            ))}
+            {latest.map((d, i) => {
+              const slugClean = d.slug.replace(/\/$/, "");
+              const seriesSlug = slugClean.split("-episode-")[0].split("-tamat-")[0];
+              return (
+                <AnimeCard
+                  key={`${slugClean}-${i}`}
+                  title={d.title}
+                  poster={d.poster}
+                  href={`/donghua/${seriesSlug}`}
+                  status={d.status}
+                  episodes={d.current_episode}
+                />
+              );
+            })}
           </div>
         </section>
       )}
@@ -63,15 +67,18 @@ export default async function DonghuaPage({ searchParams }: Props) {
         <section>
           <h2 className="section-title mb-4">Donghua Tamat</h2>
           <div className="grid grid-cols-2 xs:grid-cols-3 md:grid-cols-4 lg:grid-cols-5 gap-4 stagger-children">
-            {completed.map((d, i) => (
-              <AnimeCard
-                key={`completed-${d.slug}-${i}`}
-                title={d.title}
-                poster={d.poster}
-                href={`/donghua/${d.slug}`}
-                status="Completed"
-              />
-            ))}
+            {completed.map((d, i) => {
+              const slugClean = d.slug.replace(/\/$/, "");
+              return (
+                <AnimeCard
+                  key={`completed-${slugClean}-${i}`}
+                  title={d.title}
+                  poster={d.poster}
+                  href={`/donghua/${slugClean}`}
+                  status="Completed"
+                />
+              );
+            })}
           </div>
         </section>
       )}

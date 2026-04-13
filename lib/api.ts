@@ -9,16 +9,16 @@ const API_BASE = process.env.ANIME_API_BASE || "https://www.sankavollerei.com";
 
 /**
  * Server-side fetch — used in Server Components and API routes
- * Fetches directly from Sanka Vollerei API with ISR caching
+ * Fetches directly from Sanka Vollerei API (Dynamic/No-cache)
  */
 export async function fetchAPI<T>(
   path: string,
-  revalidate: number = 60
+  revalidate?: number // parameter ini dibiarkan untuk backward compability tapi tidak dipakai
 ): Promise<T> {
   const url = `${API_BASE}/anime${path}`;
 
   const res = await fetch(url, {
-    next: { revalidate },
+    cache: "no-store", // ⬅️ Ini kuncinya: paksa ambil data real-time
     signal: AbortSignal.timeout(15000),
     headers: {
       "User-Agent": "KelasNime/1.0",
