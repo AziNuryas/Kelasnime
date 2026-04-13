@@ -4,17 +4,19 @@ import { PLATFORMS } from "@/lib/constants";
 
 function FooterLogo() {
   return (
-    <svg viewBox="0 0 32 32" fill="none" className="w-6 h-6">
+    <svg viewBox="0 0 100 100" fill="none" className="w-6 h-6" xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="footerGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="footerHexGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#06b6d4" />
           <stop offset="100%" stopColor="#8b5cf6" />
         </linearGradient>
       </defs>
-      <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#footerGrad)" opacity="0.15" />
-      <rect x="1" y="1" width="30" height="30" rx="8" stroke="url(#footerGrad)" strokeWidth="1.5" fill="none" />
-      <path d="M12 8L12 24L26 16Z" fill="url(#footerGrad)" opacity="0.9" />
-      <path d="M8 7L8 25M8 16L18 7M8 16L18 25" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Hexagon Background */}
+      <path d="M50 5 L88.97 27.5 L88.97 72.5 L50 95 L11.03 72.5 L11.03 27.5 Z" fill="url(#footerHexGrad)" fillOpacity="0.15" stroke="url(#footerHexGrad)" strokeWidth="6" strokeLinejoin="round" />
+      {/* Hexagon Inner Stroke */}
+      <path d="M50 15 L80.31 32.5 L80.31 67.5 L50 85 L19.69 67.5 L19.69 32.5 Z" stroke="url(#footerHexGrad)" strokeWidth="2" strokeLinejoin="round" opacity="0.5" />
+      {/* Play Button */}
+      <path d="M42 35 L42 65 L68 50 Z" fill="url(#footerHexGrad)" />
     </svg>
   );
 }
@@ -100,14 +102,41 @@ export default function Footer() {
         </div>
 
         {/* Bottom */}
-        <div className="mt-10 pt-6 border-t border-[var(--border-default)] flex flex-col sm:flex-row items-center justify-between gap-4">
-          <p className="text-xs text-[var(--text-muted)]">
-            © {new Date().getFullYear()} KelasNime. Dibuat untuk edukasi dan
-            hiburan.
-          </p>
-          <p className="text-xs text-[var(--text-muted)]">
-            KelasNime tidak menyimpan file apapun di server kami.
-          </p>
+        <div className="mt-10 pt-6 border-t border-[var(--border-default)] flex flex-col items-center justify-between gap-4 md:flex-row">
+          <div className="text-xs text-[var(--text-muted)] space-y-1.5 text-center md:text-left">
+            <p>
+              © {new Date().getFullYear()} KelasNime. Dibuat untuk edukasi dan hiburan.
+            </p>
+            <p>
+              Dikembangkan oleh{" "}
+              <a
+                href="https://azinuryas.vercel.app"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-400 hover:text-cyan-300 hover:underline transition-colors"
+              >
+                AziDev (Portofolio)
+              </a>
+              .
+            </p>
+          </div>
+          <div className="text-xs text-[var(--text-muted)] space-y-1.5 text-center md:text-right">
+            <p className="flex items-center justify-center md:justify-end gap-1">
+              Terima kasih untuk API dari{" "}
+              <a
+                href="https://sankavollerei.com"
+                target="_blank"
+                rel="noopener noreferrer"
+                className="text-cyan-400 hover:underline inline-flex items-center transition-colors"
+              >
+                Sanka Vollerei
+              </a>
+              {" "}dan Dev-nya! 🎉
+            </p>
+            <p>
+              KelasNime tidak menyimpan file apapun di server kami.
+            </p>
+          </div>
         </div>
       </div>
     </footer>

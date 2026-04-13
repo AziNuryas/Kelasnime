@@ -15,14 +15,9 @@ import { cn } from "@/lib/utils";
 
 function LogoIcon({ className }: { className?: string }) {
   return (
-    <svg
-      viewBox="0 0 32 32"
-      fill="none"
-      xmlns="http://www.w3.org/2000/svg"
-      className={className}
-    >
+    <svg viewBox="0 0 100 100" fill="none" className={className} xmlns="http://www.w3.org/2000/svg">
       <defs>
-        <linearGradient id="logoGrad" x1="0%" y1="0%" x2="100%" y2="100%">
+        <linearGradient id="hexagonGrad" x1="0%" y1="0%" x2="100%" y2="100%">
           <stop offset="0%" stopColor="#06b6d4" />
           <stop offset="100%" stopColor="#8b5cf6" />
         </linearGradient>
@@ -30,14 +25,17 @@ function LogoIcon({ className }: { className?: string }) {
           <stop offset="0%" stopColor="#22d3ee" />
           <stop offset="100%" stopColor="#a78bfa" />
         </linearGradient>
+        <filter id="logoGlow" x="-20%" y="-20%" width="140%" height="140%">
+          <feGaussianBlur stdDeviation="4" result="blur" />
+          <feComposite in="SourceGraphic" in2="blur" operator="over" />
+        </filter>
       </defs>
-      {/* Rounded square background */}
-      <rect x="1" y="1" width="30" height="30" rx="8" fill="url(#logoGrad)" opacity="0.15" />
-      <rect x="1" y="1" width="30" height="30" rx="8" stroke="url(#logoGrad)" strokeWidth="1.5" fill="none" />
-      {/* Play triangle */}
-      <path d="M12 8L12 24L26 16Z" fill="url(#playGrad)" opacity="0.9" />
-      {/* K letter overlay */}
-      <path d="M8 7L8 25M8 16L18 7M8 16L18 25" stroke="white" strokeWidth="2.5" strokeLinecap="round" strokeLinejoin="round" />
+      {/* Hexagon Background */}
+      <path d="M50 5 L88.97 27.5 L88.97 72.5 L50 95 L11.03 72.5 L11.03 27.5 Z" fill="url(#hexagonGrad)" fillOpacity="0.15" stroke="url(#hexagonGrad)" strokeWidth="6" strokeLinejoin="round" />
+      {/* Hexagon Inner Stroke */}
+      <path d="M50 15 L80.31 32.5 L80.31 67.5 L50 85 L19.69 67.5 L19.69 32.5 Z" stroke="url(#hexagonGrad)" strokeWidth="2" strokeLinejoin="round" opacity="0.5" />
+      {/* Play Button */}
+      <path d="M42 35 L42 65 L68 50 Z" fill="url(#playGrad)" filter="url(#logoGlow)" />
     </svg>
   );
 }

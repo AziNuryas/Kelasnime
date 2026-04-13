@@ -34,11 +34,11 @@ interface DonghuaDetail {
   country?: string;
   released_on?: string;
   updated_on?: string;
-  synopsis?: string;
+  synopsis?: string | string[];
   genres?: DonghuaGenre[];
   episodes_list?: DonghuaEpisodeItem[];
   // fallback fields in case API changes
-  description?: string;
+  description?: string | string[];
   [key: string]: any;
 }
 
